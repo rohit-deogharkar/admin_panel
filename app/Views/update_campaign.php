@@ -1,3 +1,10 @@
+<?php
+
+echo view('navbar');
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,39 +34,30 @@
 <body>
     <? ?>
     <div class="mt-5 container text-center p-3 border bg-white w-50" style="font-size:13px">
-        <form class="p-3" action="/postupdatedetials/<?= $user['id'] ?>" method="POST">
+        <form class="p-3" action="/postcampaignupdatedetails/<?= $updatdetails['cid'] ?>" method="POST">
 
             <div class="row justify-content-center">
                 <span class="col-4">Enter username
                 </span>
-                <input class="mb-2 col-4" name="username" type="text" id="" value="<?= $user['username'] ?>"><br>
+                <input class="mb-2 col-4" name="campaign_name" type="text" id=""
+                    value="<?= $updatdetails['campaign_name'] ?>"><br>
             </div>
             <div class="row justify-content-center">
                 <span class="col-4">Enter Email
                 </span>
-                <input class="mb-2 col-4" name="email" type="text" id="" value="<?= $user['email'] ?>"><br><br>
-            </div>
-            <div class="row justify-content-center">
-                <span class="col-4">Enter password
-                </span>
-                <input class="mb-2 col-4" name="password" type="text" id="" value="<?= $user['password'] ?>"><br>
+                <input class="mb-2 col-4" name="campaign_description" type="text" id=""
+                    value="<?= $updatdetails['campaign_description'] ?>"><br><br>
             </div>
             <div class="row justify-content-center">
                 <span class="col-4"> Select Role:
                 </span>
-                <select class="mb-2 col-4" name="role" id="roles" value="<?= $user['role'] ?>">
-                    <?php foreach ($levels as $level): ?>
-                        <option value="<?= $level['lid'] ?>"><?= $level['level_name'] ?></option>
+                <select class="mb-2 col-4" name="supervisor_id" id="roles">
+                    <?php foreach ($supservisors as $supervisor): ?>
+                        <option value="<?= $supervisor['id'] ?>"><?= $supervisor['username'] ?></option>
                     <?php endforeach; ?>
                 </select><br>
             </div>
 
-            <div class="row justify-content-center">
-                <span class="col-4">Enter Date of Birth
-                </span>
-                <input class="mb-2 col-4" class="" name="date_of_birth" type="date" id=""
-                    value="<?= $user['date_of_birth'] ?>"><br><br>
-            </div>
 
             <input style="background-color:green; color:white; border:none" class="" type="submit" name="" id="">
         </form>

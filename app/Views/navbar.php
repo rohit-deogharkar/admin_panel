@@ -1,3 +1,11 @@
+<link rel="stylesheet" href="<?= base_url('css/bootstrap.min.css') ?>">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -51,7 +59,7 @@
     <div class="d-flex justify-content-center px-5">
         <div class="row text-center " style="font-size:12px">
             <div class="col col-md-auto align-items-center">
-                <a class="link" href="/"><i class="fa-solid fa-chart-line px-1" style="font-size:10px"></i>
+                <a class="link" href="<?= base_url('/')?>"><i class="fa-solid fa-chart-line px-1" style="font-size:10px"></i>
                     Dashboard</a>
             </div>
             <div class="col col-md-auto align-items-center">
@@ -114,8 +122,10 @@
                         <a class="link" href="#"><i class="fa-brands fa-ubuntu px-1" style="font-size:10px"></i>
                             Operations</a>
                         <ul class="operations-list">
-                            <li><a href="/add-user">Add User</a></li>
-
+                            <li><a href="<?= base_url('/add-user')?>">Add User</a></li>
+                            <li><a href="<?= base_url('/show-users')?>">Show User</a></li>
+                            <li><a href="<?= base_url('/add-campaign')?>">Add Campaign</a></li>
+                            <li><a href="<?= base_url('/show-campaigns')?>">Show Campaign</a></li>
                         </ul>
                     </div>
 

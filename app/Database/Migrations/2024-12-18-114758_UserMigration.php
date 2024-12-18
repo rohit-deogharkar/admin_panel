@@ -33,8 +33,8 @@ class UserMigration extends \CodeIgniter\Database\Migration
                 // 'null' => true,
             ],
             'role' => [
-                'type' => 'ENUM("Agent", "Admin", "Team Leader", "Supervisor")',
-                'default' => 'Agent',
+                'type' => 'INT',
+                // 'default' => 'agent',
                 // 'null' => false
             ]
         ]);

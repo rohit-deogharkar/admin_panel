@@ -1,3 +1,9 @@
+<?php 
+
+echo view('navbar');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,6 +62,15 @@
 </head>
 
 <body>
+
+    <div class="bg-white mt-1" style="font-size: 12px;">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/show-users">Show Users</a></li>
+            
+        </ol>
+    </div>
+
     <div class="mt-5 mx-auto border container bg-white">
         <?php if (count($users) > 0): ?>
             <table id="usertable" class="table table-striped" style="font-size:12px;">
@@ -72,21 +87,21 @@
                 <tbody>
                     <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?= $user['id'] ?></td>
-                            <td><?= $user['username'] ?></td>
-                            <td><?= $user['email'] ?></td>
-                            <td><?= $user['date_of_birth'] ?></td>
-                            <td><?= $user['role'] ?></td>
+                            <td><?= $user->id ?></td>
+                            <td><?= $user->username ?></td>
+                            <td><?= $user->email ?></td>
+                            <td><?= $user->date_of_birth ?></td>
+                            <td><?= $user->accessname?></td>
                             <td>
-                                <a href="/updatedetials/<?= $user['id'] ?>">Edit</a>
-                                <a href="/delete/<?= $user['id'] ?>">Delete</a>
+                                <a href="/updatedetials/<?= $user->id ?>">Edit</a>
+                                <a href="/delete/<?= $user->id ?>">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else: ?>
-            <h1>No records found</h1>
+            <h1 class="text-center bg-body">No records found</h1>
         <?php endif; ?>
     </div>
 </body>

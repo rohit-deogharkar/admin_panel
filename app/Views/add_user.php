@@ -1,3 +1,9 @@
+<?php
+
+echo view('navbar');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,10 +53,14 @@
                 <span class="col-4"> Select Role:
                 </span>
                 <select class="mb-2 col-4" name="role" id="roles">
-                    <option value="Team Leader">Team Leader</option>
+                    <!-- <option value="Team Leader">Team Leader</option>
                     <option value="Agent">Agent</option>
                     <option value="Supervisor">Supervisor</option>
-                    <option value="Admin">Admin</option>
+                    <option value="Admin">Admin</option> -->
+
+                    <?php foreach($levels as $level):?>
+                        <option value="<?= $level['lid']?>"><?= $level['level_name']?></option>
+                        <?php endforeach;?>
                 </select><br>
             </div>
 

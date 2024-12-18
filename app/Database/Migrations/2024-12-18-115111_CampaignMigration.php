@@ -9,33 +9,33 @@ class ProcessMigration extends Migration
     public function up()
     {
         $this->forge->addField([
-            'pid' => [
+            'cid' => [
                 'type' => 'INT',
                 'constraint' => 15,
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'process_name' => [
+            'campaign_name' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => true
             ],
-            'team_leader_name' => [
+            'campaign_description' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => true
             ],
-            'team_leader_id' => [
+            'supervisor_id' => [
                 'type' => 'INT',
                 'null' => false
             ]
         ]);
-        $this->forge->addKey('pid', true);
-        $this->forge->createTable('process');
+        $this->forge->addKey('cid', true);
+        $this->forge->createTable('campaign');
     }
 
     public function down()
     {
-        $this->forge->dropTable('process');
+        $this->forge->dropTable('campaign');
     }
 }

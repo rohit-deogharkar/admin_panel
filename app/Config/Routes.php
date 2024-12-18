@@ -12,3 +12,11 @@ $routes->get('show-users', "UserController::showusers");
 $routes->get('updatedetials/(:num)', "UserController::updatedetails/$1");
 $routes->post('postupdatedetials/(:num)', "UserController::postupdatedetails/$1");
 $routes->get('delete/(:num)', "UserController::delete/$1");
+
+$routes->get('/show-campaigns', "CampaignController::index");
+$routes->get('/add-campaign', "CampaignController::add");
+$routes->post('/insert-campaign', "CampaignController::insertCampaign");
+
+$routes->get('/campaignupdatedetails/(:any)', "CampaignController::edit/$1");
+$routes->post('/postcampaignupdatedetails/(:any)', "CampaignController::postedit/$1");
+$routes->get('/deletecampaign/(:any)', "CampaignController::delete/$1");
