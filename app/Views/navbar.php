@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="<?= base_url('css/bootstrap.min.css') ?>">
-
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -52,14 +50,12 @@
     }
 </style>
 
-<div class="py-2 px-4 border bg-white">
-    <img src="<?= base_url('images/slash-icon.jpg') ?>" style="width:30px;" alt="">
-</div>
 <div class="pt-2 pb-2 shadow-sm m-0 border bg-white">
     <div class="d-flex justify-content-center px-5">
         <div class="row text-center " style="font-size:12px">
             <div class="col col-md-auto align-items-center">
-                <a class="link" href="<?= base_url('/')?>"><i class="fa-solid fa-chart-line px-1" style="font-size:10px"></i>
+                <a class="link" href="<?= base_url('/') ?>"><i class="fa-solid fa-chart-line px-1"
+                        style="font-size:10px"></i>
                     Dashboard</a>
             </div>
             <div class="col col-md-auto align-items-center">
@@ -67,10 +63,10 @@
                     <a class="link" href="#">
                         <i class="fa-solid fa-rss px-1" style="font-size:10px"></i>
                         Live</a>
-                    <ul class="operations-list">
+                    <!-- <ul class="operations-list">
                         <li><a href="/">Users</a></li>
                         <li><a href="/">Campaigns</a></li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
             <div class="col col-md-auto">
@@ -79,10 +75,10 @@
                     <div class="operations-menu">
                         <a class="link" href="#"><i class="fa-solid fa-file-lines px-1" style="font-size:10px"></i>
                             Reports</a>
-                        <ul class="operations-list">
+                        <!-- <ul class="operations-list">
                             <li><a href="/">Users</a></li>
                             <li><a href="/">Campaigns</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
 
                 </div>
@@ -93,10 +89,10 @@
                     <div class="operations-menu">
                         <a class="link" href="#"><i class="fa-solid fa-comments px-1" style="font-size:10px"></i>
                             Conversations</a>
-                        <ul class="operations-list">
+                        <!-- <ul class="operations-list">
                             <li><a href="/">Users</a></li>
                             <li><a href="/">Campaigns</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
 
                 </div>
@@ -107,10 +103,10 @@
                     <div class="operations-menu">
                         <a class="link" href="#"><i class="fa-solid fa-address-book px-1" style="font-size:10px"></i>
                             Contact</a>
-                        <ul class="operations-list">
+                        <!-- <ul class="operations-list">
                             <li><a href="/">Users</a></li>
                             <li><a href="/">Campaigns</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
 
                 </div>
@@ -122,25 +118,24 @@
                         <a class="link" href="#"><i class="fa-brands fa-ubuntu px-1" style="font-size:10px"></i>
                             Operations</a>
                         <ul class="operations-list">
-                            <li><a href="<?= base_url('/add-user')?>">Add User</a></li>
-                            <li><a href="<?= base_url('/show-users')?>">Show User</a></li>
-                            <li><a href="<?= base_url('/add-campaign')?>">Add Campaign</a></li>
-                            <li><a href="<?= base_url('/show-campaigns')?>">Show Campaign</a></li>
+
+                            <li><a href="<?= base_url('/show-users') ?>">Show User</a></li>
+
+                            <li><a href="<?= base_url('/show-campaigns') ?>">Show Campaign</a></li>
                         </ul>
                     </div>
 
                 </div>
             </div>
             <div class="col col-md-auto">
-
                 <div class="col col-md-auto align-items-center">
                     <div class="operations-menu">
                         <a class="link" href="#"> <i class="fa-solid fa-sliders px-1" style="font-size:10px"></i>
                             Advanced Settings</a>
-                        <ul class="operations-list">
+                        <!-- <ul class="operations-list">
                             <li><a href="/">Users</a></li>
                             <li><a href="/">Campaigns</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
 
                 </div>

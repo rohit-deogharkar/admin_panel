@@ -5,7 +5,9 @@ namespace App\Controllers;
 class Home extends BaseController
 {
     public function index(): string
-    {
-        return view('home_page');
+    {   
+        $data['pageName'] = 'home_page';
+        $data['pageData'] = [];
+        return view('template',$data);
     }
 }

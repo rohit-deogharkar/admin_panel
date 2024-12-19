@@ -1,10 +1,3 @@
-<?php
-
-echo view('navbar');
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 

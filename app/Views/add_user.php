@@ -1,9 +1,3 @@
-<?php
-
-echo view('navbar');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +25,16 @@ echo view('navbar');
 
 <body>
     <?php ?>
+
+    <div class="bg-white mt-1" style="font-size: 12px;">
+        <ol class="breadcrumb m-0 px-2">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('/show-users')?>">Show User</a></li>
+            <li class="breadcrumb-item"><a href="/add-user">Add User</a></li>
+        </ol>
+    </div>
     <div class="mt-5 container text-center border bg-white w-50" style="font-size:13px">
+        <?= session()->getFlashdata('message') ? "<div class='p-1 mt-1 text-danger'>*" . session()->getFlashdata('message') . "</div>" : "" ?>
         <form class="pt-4" action="/post-user" method="POST">
 
             <div class="row p-0 justify-content-center">
@@ -53,14 +56,9 @@ echo view('navbar');
                 <span class="col-4"> Select Role:
                 </span>
                 <select class="mb-2 col-4" name="role" id="roles">
-                    <!-- <option value="Team Leader">Team Leader</option>
-                    <option value="Agent">Agent</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Admin">Admin</option> -->
-
-                    <?php foreach($levels as $level):?>
-                        <option value="<?= $level['lid']?>"><?= $level['level_name']?></option>
-                        <?php endforeach;?>
+                    <?php foreach ($pageData as $level): ?>
+                        <option value="<?= $level['lid'] ?>"><?= $level['level_name'] ?></option>
+                    <?php endforeach; ?>
                 </select><br>
             </div>
 

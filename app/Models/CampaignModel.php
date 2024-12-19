@@ -51,7 +51,21 @@ class CampaignModel extends Model
 
     public function addCampaign($data)
     {
-        $this->insert($data);
+        $message = [];
+        $uniqueCheck = $this->where('campaign_name', $data['campaign_name'])->first();
+        if ($uniqueCheck) {
+            $message = [
+                'status' => 'failed',
+                'message' => 'Campaign name already exists',
+            ];
+        } else {
+            $this->insert($data);
+            $message = [
+                'status' => 'success',
+                'message' => "Campaign added successfully",
+            ];
+        }
+        return $message;
     }
 
     public function getCampaignUpdateDetails($id)

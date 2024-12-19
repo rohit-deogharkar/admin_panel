@@ -1,9 +1,3 @@
-<?php
-
-echo view('navbar');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +64,7 @@ echo view('navbar');
 <body>
 
     <div class="bg-white mt-1" style="font-size: 12px;">
-        <ol class="breadcrumb m-0">
+        <ol class="breadcrumb m-0 px-2">
             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
         </ol>
     </div>

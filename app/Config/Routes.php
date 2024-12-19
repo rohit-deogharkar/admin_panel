@@ -5,9 +5,14 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+$routes->get('/login', "UserController::login");
+$routes->post('/postlogin', "UserController::postlogin");
+$routes->get('/logout', "UserController::logout");
+
 $routes->get('/', 'Home::index');
-$routes->get( 'add-user', "UserController::add_user");
-$routes->post( 'post-user', "UserController::add_user_table");
+$routes->get('add-user', "UserController::add_user");
+$routes->post('post-user', "UserController::add_user_table");
 $routes->get('show-users', "UserController::showusers");
 $routes->get('updatedetials/(:num)', "UserController::updatedetails/$1");
 $routes->post('postupdatedetials/(:num)', "UserController::postupdatedetails/$1");

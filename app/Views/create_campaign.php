@@ -1,10 +1,3 @@
-<?php
-
-echo view('navbar');
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,9 +25,16 @@ echo view('navbar');
 
 <body>
     <?php ?>
+    <div class="bg-white mt-1" style="font-size: 12px;">
+        <ol class="breadcrumb m-0 px-2">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/show-campaigns">Show Campaign</a></li>
+            <li class="breadcrumb-item"><a href="/add-campaign">Add Campaign</a></li>
+        </ol>
+    </div>
     <div class="mt-5 container text-center border bg-white w-50" style="font-size:13px">
-        <form class="pt-4" action="<?= base_url('insert-campaign') ?>" method="POST">
-
+        <?= session()->getFlashdata('message') ? "<div class='p-1 mt-1 text-danger'>*" . session()->getFlashdata('message') . "</div>" : "" ?>
+        <form class="pt-3" action="<?= base_url('insert-campaign') ?>" method="POST">
             <div class="row p-0 justify-content-center">
                 <span class="col-4">Enter Name
                 </span>

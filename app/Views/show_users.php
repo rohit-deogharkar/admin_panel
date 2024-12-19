@@ -1,9 +1,3 @@
-<?php 
-
-echo view('navbar');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,16 +57,17 @@ echo view('navbar');
 
 <body>
 
-    <div class="bg-white mt-1" style="font-size: 12px;">
-        <ol class="breadcrumb m-0">
+    <div class="bg-white mt-1 d-flex align-items-center justify-content-between" style="font-size: 12px;">
+        <ol class="breadcrumb m-0 px-2">
             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="/show-users">Show Users</a></li>
-            
+
         </ol>
+        <a href="<?= base_url('/add-user') ?>"><i class="fa-solid fa-plus px-5"></i> </a>
     </div>
 
     <div class="mt-5 mx-auto border container bg-white">
-        <?php if (count($users) > 0): ?>
+        <?php if (count($pageData) > 0): ?>
             <table id="usertable" class="table table-striped" style="font-size:12px;">
                 <thead>
                     <tr>
@@ -85,16 +80,18 @@ echo view('navbar');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($users as $user): ?>
+                    <?php foreach ($pageData as $user): ?>
                         <tr>
                             <td><?= $user->id ?></td>
                             <td><?= $user->username ?></td>
                             <td><?= $user->email ?></td>
                             <td><?= $user->date_of_birth ?></td>
-                            <td><?= $user->accessname?></td>
+                            <td><?= $user->accessname ?></td>
                             <td>
-                                <a href="/updatedetials/<?= $user->id ?>">Edit</a>
-                                <a href="/delete/<?= $user->id ?>">Delete</a>
+                                <a class="mx-1" href="/updatedetials/<?= $user->id ?>"><i
+                                        class="fa-solid fa-pen-to-square text-success"></i></a>
+                                <a class="mx-1" href="/delete/<?= $user->id ?>"><i
+                                        class="fa-solid fa-trash text-danger"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
