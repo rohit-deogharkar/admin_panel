@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-
+$routes->setAutoRoute(true);
 $routes->get('/login', "UserController::login");
 $routes->post('/postlogin', "UserController::postlogin");
 $routes->get('/logout', "UserController::logout");

@@ -9,18 +9,25 @@ class CampaignController extends BaseController
 {
     public function __construct()
     {
-        // $campaignModel = new CampaignModel();
         $this->userModel = new \App\Models\UserModel();
         $this->campaignModel = new CampaignModel();
         $this->db = \Config\Database::connect();
     }
     public function index()
     {
-        $query = 'select *, ( select username from user where user.id = campaign.supervisor_id ) as supervisor from campaign;';
-        $resultTable = $this->db->query($query);
+        $filtersupervisor = $this->request->getGet('filter-supervisor');
 
+        if ($filtersupervisor) {
+            $data['pageData'] = $this->campaignModel->where('supervisor_id', $filtersupervisor)->paginate(2);
+        } else {
+            $data['pageData'] = $this->campaignModel->paginate(2);
+        }
+
+        $data['userData'] = $this->userModel->findAll();
+        $data['filterData'] = $this->userModel->where('role', 2)->findAll();
         $data['pageName'] = 'show_campaign';
-        $data['pageData'] = $resultTable->getResult();
+        $data['pager'] = $this->campaignModel->pager;
+
         return view('template', $data);
     }
 
@@ -39,7 +46,7 @@ class CampaignController extends BaseController
             'campaign_description' => $this->request->getPost('campaign_description'),
             'supervisor_id' => $this->request->getPost('supervisor_id')
         ];
-        if($data['campaign_name'] == "" || $data['campaign_description'] == "" || $data['supervisor_id'] == ""){
+        if ($data['campaign_name'] == "" || $data['campaign_description'] == "" || $data['supervisor_id'] == "") {
             return redirect()->to('/add-campaign')->with('message', 'Please fill all fields');
         }
 

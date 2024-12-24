@@ -19,14 +19,14 @@ class UserController extends BaseController
         $this->userModel = new UserModel();
     }
 
-    public function checklogin(){
-        if(session('logged_in')){
-            return redirect()->to('/');
-        }
-        else{
-            return redirect()->to('/login');
-        }
-    }
+    // public function checklogin()
+    // {
+    //     if (session('logged_in')) {
+    //         return redirect()->to('/');
+    //     } else {
+    //         return redirect()->to('/login');
+    //     }
+    // }
 
     public function login()
     {
@@ -42,10 +42,11 @@ class UserController extends BaseController
         $user = $this->userModel->where('username', $username)->first();
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $this->session->set('logged_in', true);
-                $this->session->set('user_id', $user['id']);
-                $this->session->set('username', $user['username']);
-                return redirect()->to('/');
+                session()->set('logged_in', true);
+                session()->set('user_id', $user['id']);
+                session()->set('username', $user['username']);
+                print_r(session('username') . session('user_id') . session('logged_in'));
+                // return redirect()->to('/');
             } else {
                 return redirect()->to('/login')->with('message', 'Invalid username or password');
             }
@@ -118,17 +119,24 @@ class UserController extends BaseController
     public function showusers()
     {
         $db = \Config\Database::connect();
-        $userModel = new UserModel();
-        $accessLevelModel = new AcessLevelModel();
+        $levelModel = new AcessLevelModel();
 
-        $levels = $accessLevelModel->findAll();
-        $users = $userModel->findAll();
-
-        $query = 'select *, ( select level_name from access_level where access_level.lid = user.role ) as accessname from user;';
-        $resultTable = $db->query($query);
-        // print_r($resultTable->getResult());
+        $data['pageData'] = [];
         $data['pageName'] = 'show_users';
-        $data['pageData'] = $resultTable->getResult();
+
+        $levels = $levelModel->findAll();
+
+        $data['filterData'] = $levels;
+        $data['pager'] = $this->userModel->pager;
+
+        $filterrole = $this->request->getGet('filter-role');
+
+        if ($filterrole) {
+            $data['pageData'] = $this->userModel->where('role', $filterrole)->paginate(2);
+        } else {
+            $data['pageData'] = $this->userModel->paginate(2);
+        }
+        $data['pager'] = $this->userModel->pager;
         return view('template', $data);
     }
 
@@ -164,8 +172,10 @@ class UserController extends BaseController
         return redirect()->to('/show-users');
     }
 
-    public function logout(){
+    public function logout()
+    {
         session()->destroy();
         return redirect()->to('/login');
     }
 }
+?>

@@ -66,7 +66,19 @@
         <a href="<?= base_url('/add-user') ?>"><i class="fa-solid fa-plus px-5"></i> </a>
     </div>
 
-    <div class="mt-5 mx-auto border container bg-white">
+    <div class="filter-div container m-auto mt-2 text-center" style="font-size:12px;">
+        <form action="/show-users">
+            <select class="" id="filter-select" name="filter-role">
+                <option value="" type="disabled">Select Role</option>
+                <?php foreach ($filterData as $accesslevel): ?>
+                    <option value="<?= $accesslevel['lid'] ?>"><?= $accesslevel['level_name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <input type="submit" id="">
+        </form>
+    </div>
+
+    <div class="mt-3 mx-auto border container bg-white">
         <?php if (count($pageData) > 0): ?>
             <table id="usertable" class="table table-striped" style="font-size:12px;">
                 <thead>
@@ -82,28 +94,41 @@
                 <tbody>
                     <?php foreach ($pageData as $user): ?>
                         <tr>
-                            <td><?= $user->id ?></td>
-                            <td><?= $user->username ?></td>
-                            <td><?= $user->email ?></td>
-                            <td><?= $user->date_of_birth ?></td>
-                            <td><?= $user->accessname ?></td>
+                            <td><?= $user['id'] ?></td>
+                            <td><?= $user['username'] ?></td>
+                            <td><?= $user['email'] ?></td>
+                            <td><?= $user['date_of_birth'] ?></td>
+                            <td><?= $filterData[$user['role'] - 1]['level_name'] ?></td>
                             <td>
-                                <a class="mx-1" href="/updatedetials/<?= $user->id ?>"><i
+                                <a class="mx-1" href="/updatedetials/<?= $user['id'] ?>"><i
                                         class="fa-solid fa-pen-to-square text-success"></i></a>
-                                <a class="mx-1" href="/delete/<?= $user->id ?>"><i
+                                <a class="mx-1" href="/delete/<?= $user['id'] ?>"><i
                                         class="fa-solid fa-trash text-danger"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="container d-flex justify-content-center">
+                <?= $pager->links() ?>
+            </div>
         <?php else: ?>
             <h1 class="text-center bg-body">No records found</h1>
         <?php endif; ?>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
-    document.getElementById('usertable').dataTable()
+    // document.getElementById('usertable').dataTable()
+
+    $(document).ready(function () {
+        $('#filter-select').select2({
+            width: "11%"
+        })
+    });
 </script>
 
 </html>
