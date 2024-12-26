@@ -26,7 +26,10 @@ io.on("connection", (socket) => {
 
   socket.on("userConnected", (name) => {
     console.log(name + " has connected to the chat room");
+    
   });
+
+
 });
 
 server.listen(3000, () => {
