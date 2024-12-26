@@ -13,4 +13,8 @@ class ChatController extends BaseController
         $data['pageData'] = [];
         return view('template', $data);
     }
+
+    public function getvalue(){
+        echo "This is the page";
+    }
 }
