@@ -1,15 +1,19 @@
 const express = require("express");
 const http = require("http");
-const { Server } = require("socket.io", {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+const cors = require('cors')
+const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: { 
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true}
+});
+
+app.use(express.json())
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.json({
@@ -28,3 +32,5 @@ io.on("connection", (socket) => {
 server.listen(3000, () => {
   console.log("Node Server Up and Running at http://localhost:3000");
 });
+
+

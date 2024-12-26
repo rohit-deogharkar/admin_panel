@@ -118,7 +118,6 @@ class UserController extends BaseController
 
     public function showusers()
     {
-        $db = \Config\Database::connect();
         $levelModel = new AcessLevelModel();
 
         $data['pageData'] = [];
@@ -138,6 +137,7 @@ class UserController extends BaseController
         }
         $data['pager'] = $this->userModel->pager;
         return view('template', $data);
+        
     }
 
     public function updatedetails($id)
