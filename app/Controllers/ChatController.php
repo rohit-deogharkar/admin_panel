@@ -15,6 +15,8 @@ class ChatController extends BaseController
     }
 
     public function getvalue(){
-        echo "This is the page";
+        session()->set('username', 'anupam');
+        $username = ['username'=>session('username')];
+        return $this->response->setJSON($username);
     }
 }

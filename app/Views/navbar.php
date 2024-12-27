@@ -89,10 +89,10 @@
                     <div class="operations-menu">
                         <a class="link" href="#"><i class="fa-solid fa-comments px-1" style="font-size:10px"></i>
                             Conversations</a>
-                        <!-- <ul class="operations-list">
-                            <li><a href="/">Users</a></li>
-                            <li><a href="/">Campaigns</a></li>
-                        </ul> -->
+                        <ul class="operations-list">
+                            <li><a href="<?=base_url('ChatController')?>">Chats</a></li>
+                            
+                        </ul>
                     </div>
 
                 </div>
