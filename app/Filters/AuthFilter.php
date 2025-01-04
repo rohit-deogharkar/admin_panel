@@ -25,15 +25,8 @@ class AuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (session()->has('username')) {
-
-            return redirect()->to('/');
-        } else {
-            // $userRole = $session->get('role');
-            // if (!in_array($userRole, $arguments)) {
-            //     return redirect()->to('/unauthorized');
-            // }
-            // if($session->has('data')){
+        $session = session();
+        if(!$session->has('data')){
             return redirect()->to('/login');
         }
     }

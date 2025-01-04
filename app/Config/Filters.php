@@ -12,6 +12,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\AuthFilter;
 
 class Filters extends BaseFilters
 {
@@ -34,7 +35,7 @@ class Filters extends BaseFilters
         'forcehttps' => ForceHTTPS::class,
         'pagecache' => PageCache::class,
         'performance' => PerformanceMetrics::class,
-        'auth' => \App\Filters\AuthFilter::class,
+        'auth' => AuthFilter::class
     ];
 
     /**
@@ -69,11 +70,11 @@ class Filters extends BaseFilters
      * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
     public array $globals = [
-        // 'before' => [
-        //     'auth' => [
-        //         'except' => ['login', 'postlogin', 'unauthorized', 'logout']
-        //     ]
-        // ],
+        'before' => [
+            'auth' => [
+                'except' => ['login', 'postlogin', 'unauthorized', 'logout']
+            ]
+        ],
         'after' => [
             // 'honeypot',
             // 'secureheaders',

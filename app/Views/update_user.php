@@ -5,15 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <link rel="stylesheet" href="<?= base_url('css/bootstrap.min.css') ?>">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
-
     <style>
         body {
             font-family: "Rubik", sans-serif;
@@ -22,8 +13,6 @@
     </style>
 
 </head>
-
-
 <body>
     <? ?>
     <div class="mt-5 container text-center p-3 border bg-white w-50" style="font-size:13px">

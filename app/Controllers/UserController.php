@@ -42,11 +42,10 @@ class UserController extends BaseController
         $user = $this->userModel->where('username', $username)->first();
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                session()->set('logged_in', true);
-                session()->set('user_id', $user['id']);
-                session()->set('username', $user['username']);
-                print_r(session('username') . session('user_id') . session('logged_in'));
-                // return redirect()->to('/');
+                session()->set('data', $user);
+                print_r(session('data'));
+                // die;
+                return redirect()->to('/');
             } else {
                 return redirect()->to('/login')->with('message', 'Invalid username or password');
             }
@@ -123,21 +122,23 @@ class UserController extends BaseController
         $data['pageData'] = [];
         $data['pageName'] = 'show_users';
 
-        $levels = $levelModel->findAll();
-
-        $data['filterData'] = $levels;
+        $levels1 = $levelModel->findAll();
+        $data['filterData'] = $levels1;
         $data['pager'] = $this->userModel->pager;
 
         $filterrole = $this->request->getGet('filter-role');
 
         if ($filterrole) {
             $data['pageData'] = $this->userModel->where('role', $filterrole)->paginate(2);
+            $data['filtervalue'] = ($levelModel->where('lid', $filterrole)->find())[0];
+            $levels = $levelModel->where('lid !=', $filterrole)->find();
+            $data['filterdropdown'] = $levels;
         } else {
             $data['pageData'] = $this->userModel->paginate(2);
         }
         $data['pager'] = $this->userModel->pager;
         return view('template', $data);
-        
+
     }
 
     public function updatedetails($id)

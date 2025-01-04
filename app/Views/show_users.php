@@ -5,18 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?= base_url('css/bootstrap.min.css') ?>">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <style>
         body {
             font-family: "Rubik", sans-serif;
@@ -69,10 +58,20 @@
     <div class="filter-div container m-auto mt-2 text-center" style="font-size:12px;">
         <form action="/show-users">
             <select class="" id="filter-select" name="filter-role">
-                <option value="" type="disabled">Select Role</option>
-                <?php foreach ($filterData as $accesslevel): ?>
-                    <option value="<?= $accesslevel['lid'] ?>"><?= $accesslevel['level_name'] ?></option>
-                <?php endforeach; ?>
+                <?php if (isset($filtervalue)): ?>
+                    <option><?= $filtervalue['level_name'] ?></option>
+                <?php else: ?>
+                    <option value="">Select Role</option>
+                <?php endif; ?>
+                <?php if (isset($filterdropdown)): ?>
+                    <?php foreach ($filterdropdown as $accesslevel): ?>
+                        <option value="<?= $accesslevel['lid'] ?>"><?= $accesslevel['level_name'] ?></option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($filterData as $accesslevel): ?>
+                        <option value="<?= $accesslevel['lid'] ?>"><?= $accesslevel['level_name'] ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </select>
             <input type="submit" id="">
         </form>
@@ -117,18 +116,6 @@
         <?php endif; ?>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    // document.getElementById('usertable').dataTable()
-
-    $(document).ready(function () {
-        $('#filter-select').select2({
-            width: "11%"
-        })
-    });
-</script>
 
 </html>

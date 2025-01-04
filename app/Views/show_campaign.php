@@ -8,8 +8,6 @@
 </head>
 
 <body>
-
-
     <div class="bg-white mt-1 d-flex align-items-center justify-content-between" style="font-size: 12px;">
         <ol class="breadcrumb m-0 px-2">
             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
@@ -63,18 +61,6 @@
         </div>
         <div>
 </body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    // document.getElementById('usertable').dataTable()
-
-    $(document).ready(function () {
-        $('#filter-select').select2({
-            width: "13%"
-        })
-    });
-</script>
 
 </html>
