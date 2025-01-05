@@ -16,7 +16,6 @@
 
         .users {
             border-bottom-style: ridge;
-            /* border: 1px solid black; */
             padding: 10px;
             font-size: 17px;
         }
@@ -33,7 +32,7 @@
             overflow-wrap: break-word;
         }
 
-        .onlineStatus {
+        #onlineStatus {
             font-size: 13px;
             margin: 0px;
             color: grey;
@@ -54,8 +53,9 @@
         </div>
 
         <div class="col-8  border-dark p-0" id="chatSection">
-            <div class="p-3 border fs-bold" id="header" style="font-size:17px; background-color: #D4EBF8">
-                this will be header
+            <div class="p-3 border fs-bold" style="font-size:17px; background-color: #D4EBF8">
+                <p class="m-0" id="header"> this will be header </p>
+                <p id="onlineStatus">online</p>
             </div>
             <div class="container p-4 bg-white messagesContainer" style="height:600px; overflow-y: scroll;">
             </div>
@@ -84,6 +84,13 @@
             return username
         }
 
+        const falseData = {
+            "id": '',
+            'username': ''
+        }
+
+        storeUserSession(falseData)
+
         const sendConnectionEvent = async () => {
             const username = await getName()
             console.log(username)
@@ -96,14 +103,10 @@
         const headerName = document.getElementById('header')
         const messageForm = document.getElementById('messageForm')
         const chatSection = document.getElementById('chatSection')
+        const onlineStatus = document.getElementById('onlineStatus')
+
         chatSection.style.visibility = "hidden"
-        // messageForm.style.visibility = "hidden"
-        // socket.on('online', (data) => {
-        //     console.log(data)
-        //     if (data) {
-        //         headerName.innerHTML += "<br>" + "online"
-        //     }
-        // })
+        onlineStatus.style.visibility = "hidden"
 
         const appendRightMessage = (message) => {
             let classes = ['ms-auto', 'mt-2', 'bg-primary', 'text-start', 'px-3', 'p-1', 'text-white', 'border', 'rounded', 'shadow', 'left-message']
@@ -131,7 +134,7 @@
                     appendRightMessage(messageInput)
                     sendMessageFunction(messageInput)
                     document.getElementById('messageInput').value = ""
-                } 
+                }
             })
         }
 
@@ -170,18 +173,17 @@
                         "id": element.getAttribute('data-value'),
                         'username': element.innerText
                     }
-
                     headerName.innerText = " "
                     headerName.innerHTML = element.innerText
                     socket.emit('checkIsOnline', element.innerText)
-                    // let recieverNameHeading = document.createElement('div')
                     socket.on('isOnline', (data) => {
                         if (data) {
-                            headerName.innerHTML = element.innerText + '<p class="onlineStatus">online'
+                            onlineStatus.style.visibility = "visible"
+                        }
+                        else {
+                            onlineStatus.style.visibility = "hidden"
                         }
                     })
-                    // messagesContainer.appendChild(recieverNameHeading)
-                    // console.log(recieverNameHeading)
                     storeUserSession(data)
                     openThisPanel = {
                         senderName: senderName,
@@ -202,7 +204,6 @@
                             }
                         })
                     })
-                    element.disabled = true
                 })
 
             })
@@ -238,6 +239,19 @@
             }
             sendMessageFunction()
         })
+
+        socket.on('iAmOnline', (data) => {
+            const sendMessageFunction = async (messageInput) => {
+                const response = await fetch('http://localhost:8080/ChatController/getvalue')
+                const name = await response.json()
+                const recievername = name.recievername
+                if (data.isOnline && data.username == recievername) {
+                    onlineStatus.style.visibility = "visible"
+                }
+            }
+            sendMessageFunction()
+        })
+
 
     </script>
 </body>

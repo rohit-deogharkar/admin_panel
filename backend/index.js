@@ -19,12 +19,6 @@ connection();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "This is Home page",
-  });
-});
-
 let newUser = ["something"];
 io.on("connection", (socket) => {
   console.log("Socket Server Up and Running");
@@ -33,7 +27,7 @@ io.on("connection", (socket) => {
     console.log(username + " has connected to the chat room");
     socket.join(username);
     const isOnline = true;
-    socket.emit("online", isOnline);
+    socket.broadcast.emit("iAmOnline", { isOnline, username });
     let isThere = false;
     for (i = 0; i < newUser.length; i++) {
       if (username == newUser[i]) {
@@ -43,43 +37,13 @@ io.on("connection", (socket) => {
     if (!isThere) {
       newUser.push(username);
     }
-    // console.log(newUser);
-    // console.log(newUser);
-
-    // console.log(socket);
   });
-  // connectionCount++;
 
-  // if (connectionCount > 2) {
-  //   connectionCount = 0;
-  //   roomno++;
-  // } else {
-  //   socket.on("weJoinedRoom", () => {
-  //     socket.join("room", roomno);
-  //     // console.log("This message came to room", room, message);
-  //     // console.log("This message came to room", message);
-  //     socket.to("room", roomno).emit("sendThisMessageToThisRoom", message);
-  //   });
-  //   console.log(roomno, connectionCount);
-  // }
-
-  // socket.on("weJoinedRoom", (data) => {
-  // connectionCount++;
-  // if (connectionCount > 1) {
-  //   connectionCount = 0;
-  //   roomno++;
-  // } else {
-  //   socket.join("room", roomno);
-  //   socket.to("room", roomno).emit("sendThisMessageToThisRoom", data);
-  // }
-  // console.log(roomno, connectionCount, data);
-
-  // console.log(data);
-  // let roomname = data.data.sort().join("_");
-  // console.log(roomname);
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 
   socket.on("checkIsOnline", (data) => {
-    // console.log(socket);
     let isOnline = false;
     console.log(newUser);
     console.log(data);
@@ -90,22 +54,13 @@ io.on("connection", (socket) => {
         console.log(isOnline);
         break;
       } else {
-        socket.emit("isOnline", isOnline);
+        socket.emit("isOnline", isOnline);  
       }
     }
-
-    // console.log(data);
   });
 
   socket.on("sendThisMessageToRoom", (data) => {
-    // console.log(data);
-    // let dataRoomName = [data.sendername, data.recievername];
-    // let messageRoomName = dataRoomName.sort().join("_");
-    // console.log(messageRoomName);
-    // if (messageRoomName == roomname) {
     socket.to(data.recievername).emit("sendThisMessageToRoom", data);
-    // console.log(`Joined to room ${roomname}, ${messageRoomName}`);
-    // }
     const { roomname, sendername, recievername, message } = data;
     const sendMessage = async () => {
       const collection = await connection();
@@ -114,39 +69,28 @@ io.on("connection", (socket) => {
         recievername: recievername,
         message: message,
         roomname: roomname,
+        timestamp: new Date(),
       });
       return result;
     };
-    // console.log(data);
-    // socket.broadcast.emit("seeThisMessage", data);
     sendMessage();
   });
-  // });
 
-  //
-  // // socket.to("room1").emit("this room");
-  //
-
-  socket.on(
-    "sendPreviousMessages",
-    ({ roomname, senderName, recieverName }) => {
-      // console.log(senderName, recieverName);
-      const sendPreviousMessages = async () => {
-        const collection = await connection();
-        const result = await collection
-          .find({
-            $or: [
-              { $and: [{ sendername: senderName }, { roomname: roomname }] },
-              { $and: [{ sendername: roomname }, { roomname: senderName }] },
-            ],
-          })
-          .toArray();
-        // console.log(result);
-        socket.emit("takethisdata", result);
-      };
-      sendPreviousMessages();
-    }
-  );
+  socket.on("sendPreviousMessages", ({ roomname, senderName }) => {
+    const sendPreviousMessages = async () => {
+      const collection = await connection();
+      const result = await collection
+        .find({
+          $or: [
+            { $and: [{ sendername: senderName }, { roomname: roomname }] },
+            { $and: [{ sendername: roomname }, { roomname: senderName }] },
+          ],
+        })
+        .toArray();
+      socket.emit("takethisdata", result);
+    };
+    sendPreviousMessages();
+  });
 });
 
 server.listen(3000, () => {
