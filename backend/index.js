@@ -25,17 +25,27 @@ app.get("/", (req, res) => {
   });
 });
 
-let roomno = 0;
-let connectionCount = 0;
-
+let newUser = ["something"];
 io.on("connection", (socket) => {
   console.log("Socket Server Up and Running");
-  // console.log(roomno);
-  // roomno++;
 
   socket.on("userConnected", (username) => {
     console.log(username + " has connected to the chat room");
     socket.join(username);
+    const isOnline = true;
+    socket.emit("online", isOnline);
+    let isThere = false;
+    for (i = 0; i < newUser.length; i++) {
+      if (username == newUser[i]) {
+        isThere = true;
+      }
+    }
+    if (!isThere) {
+      newUser.push(username);
+    }
+    // console.log(newUser);
+    // console.log(newUser);
+
     // console.log(socket);
   });
   // connectionCount++;
@@ -68,6 +78,25 @@ io.on("connection", (socket) => {
   // let roomname = data.data.sort().join("_");
   // console.log(roomname);
 
+  socket.on("checkIsOnline", (data) => {
+    // console.log(socket);
+    let isOnline = false;
+    console.log(newUser);
+    console.log(data);
+    for (i = 0; i < newUser.length; i++) {
+      if (data == newUser[i]) {
+        isOnline = true;
+        socket.emit("isOnline", isOnline);
+        console.log(isOnline);
+        break;
+      } else {
+        socket.emit("isOnline", isOnline);
+      }
+    }
+
+    // console.log(data);
+  });
+
   socket.on("sendThisMessageToRoom", (data) => {
     // console.log(data);
     // let dataRoomName = [data.sendername, data.recievername];
@@ -77,13 +106,14 @@ io.on("connection", (socket) => {
     socket.to(data.recievername).emit("sendThisMessageToRoom", data);
     // console.log(`Joined to room ${roomname}, ${messageRoomName}`);
     // }
-    const { sendername, recievername, message } = data;
+    const { roomname, sendername, recievername, message } = data;
     const sendMessage = async () => {
       const collection = await connection();
       const result = await collection.insertOne({
         sendername: sendername,
         recievername: recievername,
         message: message,
+        roomname: roomname,
       });
       return result;
     };
@@ -97,37 +127,26 @@ io.on("connection", (socket) => {
   // // socket.to("room1").emit("this room");
   //
 
-  socket.on("sendmessage", (data) => {
-    // console.log(data);
-    const { sendername, recievername, message } = data;
-    const sendMessage = async () => {
-      const collection = await connection();
-      const result = await collection.insertOne({
-        sendername: sendername,
-        recievername: recievername,
-        message: message,
-      });
-      return result;
-    };
-    // console.log(data);
-    // socket.broadcast.emit("seeThisMessage", data);
-    sendMessage();
-  });
-
-  socket.on("sendPreviousMessages", ({ senderName, recieverName }) => {
-    console.log(senderName, recieverName);
-    const sendPreviousMessages = async () => {
-      const collection = await connection();
-      const result = await collection
-        .find({
-          $or: [{ sendername: senderName }, { recievername: senderName }],
-        })
-        .toArray();
-      // console.log(result);
-      socket.emit("takethisdata", result);
-    };
-    sendPreviousMessages();
-  });
+  socket.on(
+    "sendPreviousMessages",
+    ({ roomname, senderName, recieverName }) => {
+      // console.log(senderName, recieverName);
+      const sendPreviousMessages = async () => {
+        const collection = await connection();
+        const result = await collection
+          .find({
+            $or: [
+              { $and: [{ sendername: senderName }, { roomname: roomname }] },
+              { $and: [{ sendername: roomname }, { roomname: senderName }] },
+            ],
+          })
+          .toArray();
+        // console.log(result);
+        socket.emit("takethisdata", result);
+      };
+      sendPreviousMessages();
+    }
+  );
 });
 
 server.listen(3000, () => {

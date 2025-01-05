@@ -23,7 +23,7 @@ class ChatController extends BaseController
     {
         $data = [
             'username' => session('data')['username'],
-            'recievername' => session('body')->username,
+            'recievername' => isset(session('body')->username) ? session('body')->username : " ",
         ];
         return $this->response->setJSON($data);
     }

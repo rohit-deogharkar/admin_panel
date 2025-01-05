@@ -15,8 +15,10 @@
         }
 
         .users {
-            border: 1px solid black;
+            border-bottom-style: ridge;
+            /* border: 1px solid black; */
             padding: 10px;
+            font-size: 17px;
         }
 
         .left-message {
@@ -30,21 +32,40 @@
             inline-size: 300px;
             overflow-wrap: break-word;
         }
+
+        .onlineStatus {
+            font-size: 13px;
+            margin: 0px;
+            color: grey;
+        }
     </style>
 </head>
 
 <body>
-    <div class="border-primary mt-3 mx-auto align-items-center container d-flex row p-0">
-        <div class="border container col-4 user-list">
+    <div class=" border-primary mt-3 mx-auto align-items-center container d-flex row p-0"
+        style="background-color: #F8FAFC">
+        <div class="col-4 p-0 border-end border-dark">
+            <div class="container p-3" style="font-size:17px">
+                Chats
+            </div>
+            <div class="user-list" style="background-color: #D4EBF8; height:678px">
+
+            </div>
         </div>
-        <div class="col-8">
-            <div class="header p-1 border" id="header"></div>
+
+        <div class="col-8  border-dark p-0" id="chatSection">
+            <div class="p-3 border fs-bold" id="header" style="font-size:17px; background-color: #D4EBF8">
+                this will be header
+            </div>
             <div class="container p-4 bg-white messagesContainer" style="height:600px; overflow-y: scroll;">
             </div>
-            <div class="mt-3 d-flex align-items-center justify-content-center container mx-auto p-0">
-                <input class="w-25 p-1 mx-3" type="text" id="messageInput">
-                <button class="btn btn-primary btn-sm" id="sendButton"
-                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Send</button>
+            <div class="w-100 d-flex align-items-center justify-content-center container mx-auto p-2 px-4 pt-3"
+                style="background-color: #D4EBF8">
+                <form class="w-100 text-center mb-2" id="messageForm" style="background-color: #D4EBF8">
+                    <input class="col-11 p-2" type="text" id="messageInput" style="font-size: 15px;">
+                    <button type="submit" class="btn btn-primary btn-sm " id="sendButton"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; padding:11px 15px;">Send</button>
+                </form>
             </div>
         </div>
     </div>
@@ -73,6 +94,16 @@
 
         const messagesContainer = document.querySelector('.messagesContainer')
         const headerName = document.getElementById('header')
+        const messageForm = document.getElementById('messageForm')
+        const chatSection = document.getElementById('chatSection')
+        chatSection.style.visibility = "hidden"
+        // messageForm.style.visibility = "hidden"
+        // socket.on('online', (data) => {
+        //     console.log(data)
+        //     if (data) {
+        //         headerName.innerHTML += "<br>" + "online"
+        //     }
+        // })
 
         const appendRightMessage = (message) => {
             let classes = ['ms-auto', 'mt-2', 'bg-primary', 'text-start', 'px-3', 'p-1', 'text-white', 'border', 'rounded', 'shadow', 'left-message']
@@ -92,12 +123,17 @@
 
         const sendButton = document.getElementById('sendButton')
 
-        sendButton.addEventListener('click', () => {
-            let messageInput = document.getElementById('messageInput').value
-            appendRightMessage(messageInput)
-            sendMessageFunction(messageInput)
-            document.getElementById('messageInput').value = ""
-        })
+        if (messageForm) {
+            messageForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                let messageInput = document.getElementById('messageInput').value
+                if (messageInput) {
+                    appendRightMessage(messageInput)
+                    sendMessageFunction(messageInput)
+                    document.getElementById('messageInput').value = ""
+                } 
+            })
+        }
 
         const sendMessageFunction = async (messageInput) => {
             const response = await fetch('http://localhost:8080/ChatController/getvalue')
@@ -105,9 +141,9 @@
             let data = {
                 'sendername': name.username,
                 'recievername': name.recievername,
-                'message': messageInput
+                'message': messageInput,
+                'roomname': name.recievername
             }
-            // socket.emit('sendmessage', data)
             socket.emit('sendThisMessageToRoom', data)
         }
 
@@ -129,21 +165,28 @@
             const userdivs = document.querySelectorAll('.users')
             userdivs.forEach((element) => {
                 element.addEventListener('click', function () {
+                    chatSection.style.visibility = "visible"
                     data = {
                         "id": element.getAttribute('data-value'),
                         'username': element.innerText
                     }
+
                     headerName.innerText = " "
+                    headerName.innerHTML = element.innerText
+                    socket.emit('checkIsOnline', element.innerText)
                     // let recieverNameHeading = document.createElement('div')
-                    headerName.innerText = element.innerText
+                    socket.on('isOnline', (data) => {
+                        if (data) {
+                            headerName.innerHTML = element.innerText + '<p class="onlineStatus">online'
+                        }
+                    })
                     // messagesContainer.appendChild(recieverNameHeading)
                     // console.log(recieverNameHeading)
                     storeUserSession(data)
-                    let dataForRoomName = [senderName, data.username]
-                    socket.emit('weJoinedRoom', { 'data': dataForRoomName, 'roomname': dataForRoomName.sort().join("_") })
                     openThisPanel = {
                         senderName: senderName,
-                        recieverName: element.innerText
+                        recieverName: element.innerText,
+                        roomname: data.username
                     }
                     socket.emit('sendPreviousMessages', openThisPanel)
                     socket.on('takethisdata', (data) => {
