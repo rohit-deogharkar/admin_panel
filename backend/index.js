@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     console.log(username + " has connected to the chat room");
     socket.join(username);
     const isOnline = true;
-    socket.broadcast.emit("iAmOnline", { isOnline, username });
+    console.log(socket.id + " is online");
     let isThere = false;
     for (i = 0; i < newUser.length; i++) {
       if (username == newUser[i]) {
@@ -37,10 +37,11 @@ io.on("connection", (socket) => {
     if (!isThere) {
       newUser.push(username);
     }
+    socket.broadcast.emit("iAmOnline", { isOnline, username });
   });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log(socket.id + " has disconnected from the chat room");
   });
 
   socket.on("checkIsOnline", (data) => {
@@ -54,7 +55,7 @@ io.on("connection", (socket) => {
         console.log(isOnline);
         break;
       } else {
-        socket.emit("isOnline", isOnline);  
+        socket.emit("isOnline", isOnline);
       }
     }
   });
