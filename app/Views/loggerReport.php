@@ -9,7 +9,7 @@
 
 <body>
     <div class="mt-3 mx-auto border container bg-white">
-        <a href="<?= base_url('/LoggerReportController/download') ?>">Download</a>
+        <a href="<?= base_url('/LoggerReportController/downloadMysqlCdr')?>">Download</a>
         <?php if (count($pageData) > 0): ?>
             <table id="usertable" class="table table-striped" style="font-size:10px;">
                 <thead>
