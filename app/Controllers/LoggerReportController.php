@@ -19,8 +19,22 @@ class LoggerReportController extends BaseController
 
     public function index()
     {
+        $datarequest = $this->request->getGet('datarequest');
+
+        if ($datarequest) {
+            if ($datarequest == 'sql') {
+                $data['pageData'] = $this->getMysql();
+            } else if ($datarequest == 'mongo') {
+                $data['pageData'] = $this->getMongo();
+            } else if ($datarequest == 'elastic') {
+                $data['pageData'] = $this->getElastic();
+            }
+        } else {
+            $data['pageData'] = $this->getMysql();
+        }
+        // print_r($data);
         $data['pageName'] = 'loggerReport';
-        $data['pageData'] = $this->getMysql();
+
         return view('template', $data);
     }
 
@@ -32,7 +46,7 @@ class LoggerReportController extends BaseController
     }
     public function getElastic()
     {
-        $url = 'http://localhost:3000/elastic/get';
+        $url = 'http://localhost:3000/elasticsearch/get';
         $response = $this->curlRequest($url);
         return $response;
     }
@@ -77,6 +91,35 @@ class LoggerReportController extends BaseController
     {
         $data = $this->getMysql();
         $this->download($data);
+    }
+
+    public function filter()
+    {
+
+        // $campaign_name = "securities";
+        // $agentname = "rohit";
+        // $process_name = "collections";
+
+        if(isset($campaign_name)){
+            array_push($condition_array, );
+            json_encode([ 
+                'field' => 'campaign_name',
+                'value' => $campaign_name
+            ]);
+        }
+
+
+
+        $condition_array = [];
+
+        json_encode([ 
+            'field' => 'campaign_name',
+            'value' => 'securities'
+        ]);
+
+        // 
+
+        print_r($condition_array);
     }
 
     public function download($data)

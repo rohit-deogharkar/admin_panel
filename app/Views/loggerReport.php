@@ -9,7 +9,15 @@
 
 <body>
     <div class="mt-3 mx-auto border container bg-white">
-        <a href="<?= base_url('/LoggerReportController/downloadMysqlCdr')?>">Download</a>
+        <form action="<?= base_url('/LoggerReportController/index') ?>">
+            <select name="datarequest" id="">
+                <option value="sql">MySql Logger Report</option>
+                <option value="mongo">Mongo Logger Report</option>
+                <option value="elastic">Elastic Logger Report</option>
+                <input type="submit" name="" id="">
+            </select>
+        </form>
+        <a href="<?= base_url('/LoggerReportController/downloadMysqlCdr') ?>">Download</a>
         <?php if (count($pageData) > 0): ?>
             <table id="usertable" class="table table-striped" style="font-size:10px;">
                 <thead>
@@ -39,7 +47,7 @@
                     <?php foreach ($pageData as $data): ?>
                         <tr>
                             <td><?= $data['callstart'] ?></td>
-                            <td><?= $data['call_type'] ?></td>
+                            <td><?= isset($data['call_type']) ? $data['call_type'] : $data['calltype'] ?></td>
                             <td><?= $data['dispose_name'] ?></td>
                             <td><?= $data['dispose_type'] ?></td>
                             <td><?= $data['duration'] ?></td>
