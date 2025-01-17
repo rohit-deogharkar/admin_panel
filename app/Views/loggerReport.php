@@ -8,6 +8,124 @@
 </head>
 
 <body>
+    <button onclick="toggleFilter()">Filters</button>
+    <div id="filterdiv" class="container text-center">
+        <form action="<?= base_url('LoggerReportController/filter') ?>" method="POST">
+            <select name="agentname" id="">
+                <?php if (!empty($filterdata['condition']['agentname'])): ?>
+                    <option value="<?= $filterdata['condition']['agentname'] ?>">
+                        <?= $filterdata['condition']['agentname'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Agent Name</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['agentname'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="process_name" id="">
+                <?php if (!empty($filterdata['condition']['process_name'])): ?>
+                    <option value="<?= $filterdata['condition']['process_name'] ?>">
+                        <?= $filterdata['condition']['process_name'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Process Name</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['process_name'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="call_type" id="">
+                <?php if (!empty($filterdata['condition']['call_type'])): ?>
+                    <option value="<?= $filterdata['condition']['call_type'] ?>">
+                        <?= $filterdata['condition']['call_type'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Call Type</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['call_type'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="dispose_name" id="">
+                <?php if (!empty($filterdata['condition']['dispose_name'])): ?>
+                        <option value="<?= $filterdata['condition']['dispose_name'] ?>">
+                            <?= $filterdata['condition']['dispose_name'] ?>
+                        </option>
+                    <?php else: ?>
+                        <option selected disabled>Dispose Name</option>
+                    <?php endif; ?>
+
+                    <?php foreach ($filterdata['dispose_name'] as $names): ?>
+                        <?php if (!$names == null): ?>
+                            <option value="<?= $names ?>"><?= $names ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+            </select>
+
+            <select name="leadset_id" id="">
+                <?php if (!empty($filterdata['condition']['leadset_id'])): ?>
+                    <option value="<?= $filterdata['condition']['leadset_id'] ?>">
+                        <?= $filterdata['condition']['leadset_id'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Leadset Id</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['leadset_id'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="dispose_type" id="">
+                <?php if (!empty($filterdata['condition']['dispose_type'])): ?>
+                    <option value="<?= $filterdata['condition']['dispose_type'] ?>">
+                        <?= $filterdata['condition']['dispose_type'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Dispose Type</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['dispose_type'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="campaign_name" id="">
+                <?php if (!empty($filterdata['condition']['campaign_name'])): ?>
+                    <option value="<?= $filterdata['condition']['campaign_name'] ?>">
+                        <?= $filterdata['condition']['campaign_name'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Campaign Name</option>
+                <?php endif; ?>
+
+                <?php foreach ($filterdata['campaign_name'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+
+            <input type="submit" name="" id="">
+        </form>
+    </div>
     <div class="mt-3 mx-auto border container bg-white">
         <form action="<?= base_url('/LoggerReportController/index') ?>">
             <select name="datarequest" id="">
@@ -75,5 +193,14 @@
     </div>
 
 </body>
+
+<script>
+    const filterdiv = document.getElementById("filterdiv")
+    // filterdiv.style.visibility = "hidden"
+    const toggleFilter = () => {
+        console.log("hello ")
+        filterdiv.style.visibility === "hidden" ? filterdiv.style.visibility = "visible" : filterdiv.style.visibility = "hidden";
+    }
+</script>
 
 </html>
