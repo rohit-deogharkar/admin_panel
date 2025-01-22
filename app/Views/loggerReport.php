@@ -61,18 +61,18 @@
 
             <select name="dispose_name" id="">
                 <?php if (!empty($filterdata['condition']['dispose_name'])): ?>
-                        <option value="<?= $filterdata['condition']['dispose_name'] ?>">
-                            <?= $filterdata['condition']['dispose_name'] ?>
-                        </option>
-                    <?php else: ?>
-                        <option selected disabled>Dispose Name</option>
-                    <?php endif; ?>
+                    <option value="<?= $filterdata['condition']['dispose_name'] ?>">
+                        <?= $filterdata['condition']['dispose_name'] ?>
+                    </option>
+                <?php else: ?>
+                    <option selected disabled>Dispose Name</option>
+                <?php endif; ?>
 
-                    <?php foreach ($filterdata['dispose_name'] as $names): ?>
-                        <?php if (!$names == null): ?>
-                            <option value="<?= $names ?>"><?= $names ?></option>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                <?php foreach ($filterdata['dispose_name'] as $names): ?>
+                    <?php if (!$names == null): ?>
+                        <option value="<?= $names ?>"><?= $names ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </select>
 
             <select name="leadset_id" id="">
@@ -165,9 +165,9 @@
                     <?php foreach ($pageData as $data): ?>
                         <tr>
                             <td><?= $data['callstart'] ?></td>
-                            <td><?= isset($data['call_type']) ? $data['call_type'] : $data['calltype'] ?></td>
+                            <td><?= isset($data['call_type']) ? $data['call_type'] : $data['call_type'] ?></td>
                             <td><?= $data['dispose_name'] ?></td>
-                            <td><?= $data['dispose_type'] ?></td>
+                            <td><?= isset($data['dispose_type'])? $data['dispose_type'] : ""  ?></td>
                             <td><?= $data['duration'] ?></td>
                             <td><?= $data['agentname'] ?></td>
                             <td><?= $data['campaign_name'] ?></td>
@@ -175,13 +175,13 @@
                             <td><?= $data['leadset_id'] ?></td>
                             <td><?= $data['reference_uuid'] ?></td>
                             <td><?= $data['customer_uuid'] ?></td>
-                            <td><?= $data['hold'] ?></td>
-                            <td><?= $data['mute'] ?></td>
-                            <td><?= $data['ringing'] ?></td>
-                            <td><?= $data['transfer_time'] ?></td>
-                            <td><?= $data['conference'] ?></td>
-                            <td><?= $data['call_time'] ?></td>
-                            <td><?= $data['dispose_time'] ?></td>
+                            <td><?= isset($data['hold']) ? $data['hold'] : null ?></td>
+                            <td><?= isset($data['mute']) ? $data['mute'] : "" ?></td>
+                            <td><?= isset($data['ringing']) ? $data['ringing'] : "" ?></td>
+                            <td><?= isset($data['transfer_time']) ? $data['transfer_time'] : "" ?></td>
+                            <td><?= isset($data['conference']) ? $data['conference'] : "" ?></td>
+                            <td><?= isset($data['call_time']) ? $data['call_time'] : "" ?></td>
+                            <td><?= isset($data['dispose_time']) ? $data['dispose_time'] : "" ?></td>
 
                         </tr>
                     <?php endforeach; ?>

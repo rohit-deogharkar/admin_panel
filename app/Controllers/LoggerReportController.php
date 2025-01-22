@@ -78,7 +78,6 @@ class LoggerReportController extends BaseController
         } else {
             $data['pageData'] = $this->getMysql();
         }
-
         $data['pageName'] = 'loggerReport';
         $data['filterdata'] = $this->dataForFilters();
         return view('template', $data);
@@ -98,7 +97,7 @@ class LoggerReportController extends BaseController
     }
     public function getMongo()
     {
-        $url = 'http://localhost:3000/mongo/get';
+        $url = 'http://localhost:3000/mongodb/get';
         $response = $this->curlRequest($url);
         return $response;
     }
@@ -117,8 +116,8 @@ class LoggerReportController extends BaseController
         $data['pageName'] = 'hourlyReport';
         $data['pageData'] = $response;
 
-        print_r($data);
-        // return view('template', $data);
+        // print_r($data);
+        return view('template', $data);
     }
 
     public function getElasticSummarize()

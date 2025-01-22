@@ -20,7 +20,6 @@
             <table id="usertable" class="table table-striped" style="font-size:10px;">
                 <thead>
                     <tr>
-                        <th>Date</th>
                         <?= isset($pageData[0]['hour']) ? "<th>Hour</th>" : '<th>Agent Name</th>' ?>
                         <th>Total Calls</th>
                         <th>Total Duration</th>
@@ -35,7 +34,6 @@
                 <tbody>
                     <?php foreach ($pageData as $data): ?>
                         <tr>
-                            <td><?= date('Y-m-d', strtotime($data['date'])) ?></td>
                             <td><?= isset($data['hour']) ? date('h', timestamp: strtotime($data['hour'])) . "-" . date('h', strtotime($data['hour'])) + 1 : $data['agentname'] ?>
                             </td>
                             <td><?= $data['total_calls'] ?></td>
