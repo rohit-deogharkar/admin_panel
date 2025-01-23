@@ -8,10 +8,16 @@
 </head>
 
 <body>
-    <form action="<?= base_url('LoggerReportController/getMysqlHourly') ?>">
-        <select name="reportType" id="">
+    <form action="<?= base_url('LoggerReportController/summarizeReport') ?>">
+        <!-- <select name="reportType" id="">
             <option value="hourly">Hourly Report</option>
             <option value="agentwise">Agentwise</option>
+            <input type="submit" name="" id="">
+        </select> -->
+        <select name="datarequest" id="">
+            <option value="sql">MySql Summarize Report</option>
+            <option value="mongo">Mongo Summarize Report</option>
+            <option value="elastic">Elastic Summarize Report</option>
             <input type="submit" name="" id="">
         </select>
     </form>
@@ -34,8 +40,7 @@
                 <tbody>
                     <?php foreach ($pageData as $data): ?>
                         <tr>
-                            <td><?= isset($data['hour']) ? date('h', timestamp: strtotime($data['hour'])) . "-" . date('h', strtotime($data['hour'])) + 1 : $data['agentname'] ?>
-                            </td>
+                            <td><?= $data['hour'] ?></td>
                             <td><?= $data['total_calls'] ?></td>
                             <td><?= gmdate("H:i:s", $data['total_duration']) ?></td>
                             <td><?= gmdate("H:i:s", $data['total_call_time']) ?></td>

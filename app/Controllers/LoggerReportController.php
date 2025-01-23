@@ -83,21 +83,43 @@ class LoggerReportController extends BaseController
         return view('template', $data);
     }
 
+    public function summarizeReport()
+    {
+        $datarequest = $this->request->getGet('datarequest');
+
+        if ($datarequest) {
+            if ($datarequest == 'sql') {
+                $data['pageData'] = $this->getMysqlSummarize();
+            } else if ($datarequest == 'mongo') {
+                $data['pageData'] = $this->getMongoSummarize();
+            } else if ($datarequest == 'elastic') {
+                $data['pageData'] = $this->getElasticSummarize();
+            }
+        } else {
+            $data['pageData'] = $this->getMysqlSummarize();
+        }
+        $data['pageName'] = 'hourlyReport';
+        $data['filterdata'] = $this->dataForFilters();
+        // print_r($data);
+        // die;
+        return view('template', $data);
+    }
+
     public function getMysql()
     {
-        $url = 'http://localhost:3000/mysql/get';
+        $url = 'http://localhost:5000/mysql/get';
         $response = $this->curlRequest($url);
         return $response;
     }
     public function getElastic()
     {
-        $url = 'http://localhost:3000/elasticsearch/get';
+        $url = 'http://localhost:5000/elasticsearch/get';
         $response = $this->curlRequest($url);
         return $response;
     }
     public function getMongo()
     {
-        $url = 'http://localhost:3000/mongodb/get';
+        $url = 'http://localhost:5000/mongodb/get';
         $response = $this->curlRequest($url);
         return $response;
     }
@@ -106,10 +128,10 @@ class LoggerReportController extends BaseController
     {
         $condition = $this->request->getGet('reportType');
         if ($condition) {
-            $url = 'http://localhost:3000/mysql/get/summarize/' . $condition;
+            $url = 'http://localhost:5000/mysql/get/summarize/' . $condition;
             $response = $this->curlRequest($url);
         } else {
-            $url = "http://localhost:3000/mysql/get/summarize/hourly";
+            $url = "http://localhost:5000/mysql/get/summarize/hourly";
             $response = $this->curlRequest($url);
         }
 
@@ -117,21 +139,24 @@ class LoggerReportController extends BaseController
         $data['pageData'] = $response;
 
         // print_r($data);
-        return view('template', $data);
+        // return view('template', $data);
+        return $response;
     }
 
     public function getElasticSummarize()
     {
-        $url = 'http://localhost:3000/elasticsearch/get/summarize';
+        $url = 'http://localhost:5000/elasticsearch/get/summarize';
         $response = $this->curlRequest($url);
-        print_r($response);
+        // print_r($response);
+        return $response;
     }
 
     public function getMongoSummarize()
     {
-        $url = 'http://localhost:3000/mongodb/get/summarize';
+        $url = 'http://localhost:5000/mongodb/get/summarize';
         $response = $this->curlRequest($url);
-        print_r($response);
+        // print_r($response);
+        return $response;
     }
 
     public function downloadMysqlCdr()
@@ -154,7 +179,7 @@ class LoggerReportController extends BaseController
 
     public function filter()
     {
-        $url = 'http://localhost:3000/mysql/get/filter';
+        $url = 'http://localhost:5000/mysql/get/filter';
 
         $campaign_name = $this->request->getPost('campaign_name');
         $agentname = $this->request->getPost('agentname');

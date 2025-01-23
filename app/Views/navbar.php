@@ -66,10 +66,10 @@
                     <div class="operations-menu">
                         <a class="link" href="#"><i class="fa-solid fa-file-lines px-1" style="font-size:10px"></i>
                             Reports</a>
-                        <!-- <ul class="operations-list">
-                            <li><a href="/">Users</a></li>
-                            <li><a href="/">Campaigns</a></li>
-                        </ul> -->
+                        <ul class="operations-list">
+                            <li><a href="<?= base_url('/LoggerReportController/index')?>">CDR Report</a></li>
+                            <li><a href="<?= base_url('/LoggerReportController/summarizeReport')?>">Summarize report</a></li>
+                        </ul>
                     </div>
 
                 </div>

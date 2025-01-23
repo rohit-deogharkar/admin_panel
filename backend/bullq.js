@@ -1,29 +1,12 @@
+const Bull = require("bull");
+const myFirstQueue = new Bull("user_summary", {
+  redis: { port: 6379, host: "127.0.0.1" },
+});
 
-\st Bull = require('bull');
-+++++++++++++new Bull('rohit', { redis: { port: 6379, host: '192.168.0.94' } });
-
-setTimeout( async () => {
-    for (let index = 0; index < 100; index++) {
-        myFirstQueue.add({
-            foo: 'bar' + index
-        });
-    }
-}, 100);
-1262653265978979654321
-30.000
-.toExponential.........myFirstQueue123546+8+97-*/--*/-*/-*//555555555555555555555
-80/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.11515107198667446612625316297779564443162325.toExponential.apply.apply000-78456123132654489879465654132256469878787987654321
-0.132465879/*8
-.0/9/*79.0/*982510./*
-/**************************************************
- //*-+
- // 
- // 
- // 
- 
- 
- 
-  .0798888888888
- * .0
- * 153232/*
- * \'++
+setInterval(async () => {
+  //   for (let index = 0; index < 100; index++) {
+  myFirstQueue.add({
+    foo: "bar" + Math.floor(Math.random() * 100),
+  });
+  //   }
+}, 3000);

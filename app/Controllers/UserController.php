@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AcessLevelModel;
 use App\Models\UserModel;
+use App\Controllers\LoggerReportController;
 
 class UserController extends BaseController
 {
@@ -17,6 +18,7 @@ class UserController extends BaseController
     {
         $db = \Config\Database::connect();
         $this->userModel = new UserModel();
+        $this->loggerController = new LoggerReportController();
     }
 
     // public function checklogin()
@@ -37,14 +39,15 @@ class UserController extends BaseController
 
     public function postlogin()
     {
+        $url = 'http://localhost:5000/redis/storeUserSession';
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
         $user = $this->userModel->where('username', $username)->first();
         if ($user) {
             if (password_verify($password, $user['password'])) {
                 session()->set('data', $user);
-                print_r(session('data'));
-                // die;
+                // print_r(session('data'));
+                $this->loggerController->postCurlRequest($url, $user);
                 return redirect()->to('/');
             } else {
                 return redirect()->to('/login')->with('message', 'Invalid username or password');
