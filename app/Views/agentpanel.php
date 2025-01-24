@@ -42,10 +42,7 @@
             // }
             const data = {}
             data['username'] = username
-            data[e.value] = {
-                'seconds': 0,
-                'epoch': Date.now()
-            }
+            data[e.value] = Date.now()
             // console.log(data)
             hitRequest(data)
         })
