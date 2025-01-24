@@ -22,12 +22,11 @@
     // const readyStateButton = document.getElementById('readyStateButton');
     const username = document.getElementById('usernamevalue').value
 
-    // const data = {
-    //     username: username,
-    //     state: 'stop',
-    //     timing: Date.now()
-    // }
-    // hitRequest(data)
+    const data = {
+        username: username,
+        'stop': Date.now(),
+    }
+
     const buttonNodes = document.querySelectorAll('.stateButton');
     // console.log(buttonNodes)
 
@@ -77,6 +76,8 @@
             console.log(ex)
         }
     }
+
+    hitRequest(data)
 </script>
 
 </html>
